@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+progress {
+  border-radius: 7px;
+  width: 90%;
+  height: 30px;
+  box-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.2 );
+}
+
+progress::-webkit-progress-bar {
+  background-color: rgb(240, 243, 224);
+  border-radius: 7px;
+}
+progress::-webkit-progress-value {
+  background-color: rgb(0, 140, 255);
+  border-radius: 7px;
+  /* box-shadow: 1px 1px 5px 3px rgba( 255, 0, 0, 0.8 ); */
+}
+progress::-moz-progress-bar {
+  /* style rules */
+}
+
+/*#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}*/
