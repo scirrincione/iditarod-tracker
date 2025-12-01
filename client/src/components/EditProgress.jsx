@@ -16,7 +16,7 @@ export default function EditProgress() {
       if(!id) return;
       setIsNew(false);
       const response = await fetch(
-        `http://localhost:5050/record/${user?.id.toString()}`
+        `${import.meta.env.VITE_SERVER_URL}record/${user?.id.toString()}`
       );
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
@@ -67,7 +67,7 @@ export default function EditProgress() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
 
           <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
-            <div className="sm:col-span-4">
+            <div className="sm:col-span-4 font-bold"> Current miles: {user?.progress}
               <label
                 htmlFor="position"
                 className="block text-sm font-medium leading-6 text-slate-900"
@@ -75,7 +75,7 @@ export default function EditProgress() {
                 Miles Completed
               </label>
               <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <div className="flex font-normal rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
                     name="progress"

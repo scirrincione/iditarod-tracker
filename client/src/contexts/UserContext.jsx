@@ -9,7 +9,7 @@ export const UserProvider = ({ children }) => {
   const fetchUserData = async (userData) => {
     if (!userData) return;
     console.log("Fetching user data for:", userData.email);
-    const response = await fetch(`http://localhost:5050/record/`);
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}record/`);
     if (!response.ok){
       const message = `An error occurred: ${response.statusText}`;
       console.error(message);
@@ -49,7 +49,7 @@ export const UserProvider = ({ children }) => {
     try {
       let response;
         // if we are updating a record we will PATCH to /record/:id.
-        response = await fetch(`http://localhost:5050/record/${user?._id}`, {
+        response = await fetch(`${import.meta.env.VITE_SERVER_URL}record/${user?._id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
