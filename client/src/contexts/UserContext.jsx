@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-export const UserContext = createContext({ user: null, login: () => { }, logout: () => { } });
+export const UserContext = createContext({ user: null, login: () => { }, logout: () => { }, updateUser: () => { } });
 
 
 export const UserProvider = ({ children }) => {
@@ -33,8 +33,8 @@ export const UserProvider = ({ children }) => {
     return record;
   };
 
-  const login = (userData) => {
-    const user = fetchUserData(userData);
+  const login = async (userData) => {
+    const user = await fetchUserData(userData);
     setUser(user);
     return user;
   };
@@ -45,10 +45,37 @@ export const UserProvider = ({ children }) => {
     return;
   };
 
+  const updateUser = async (updatedUser) => {
+    try {
+      let response;
+        // if we are updating a record we will PATCH to /record/:id.
+        response = await fetch(`http://localhost:5050/record/${user?._id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedUser),
+        });
+      
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+        return null;
+      }
+      else {
+        setUser(updatedUser)
+        return updatedUser;
+      }
+    } catch (error) {
+      console.error('A problem occurred adding or updating a record: ', error);
+    }
+  }
+
   const userValue = {
     user,
     login,
     logout,
+    updateUser,
   };
 
   return (

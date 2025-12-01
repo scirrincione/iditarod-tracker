@@ -1,62 +1,74 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
+import { NavLink } from "react-router-dom";
 
 const iditarod = [
-    {stop: "Anchorage", miles: 0},
-    {stop: "Campbell Airstrip", miles: 11},
-    {stop: "Willow", miles: 42},
-    {stop: "Yetna Station", miles: 53},
-    {stop: "Skwentna", miles: 83},
-    {stop: "Finger Lake", miles: 123},
-    {stop: "Rainy Pass", miles: 153},
-    {stop: "Rohn", miles: 188},
-    {stop: "Nikolai", miles: 263},
-    {stop: "McGrath", miles: 311},
-    {stop: "Takotna", miles: 329},
-    {stop: "Ophir", miles: 352},
-    {stop: "Cripple", miles: 425},
-    {stop: "Ruby", miles: 495},
-    {stop: "Galena", miles: 545},
-    {stop: "Nulato", miles: 582},
-    {stop: "Kaltag", miles: 629},
-    {stop: "Unalakleet", miles: 714},
-    {stop: "Shaktoolik", miles: 754},
-    {stop: "Koyuk", miles: 804},
-    {stop: "Elim", miles: 852},
-    {stop: "Golovin", miles: 880},
-    {stop: "White Mountain", miles: 898},
-    {stop: "Safety", miles: 953},
-    {stop: "Nome", miles: 975}
-  ]
+  { stop: "Anchorage", miles: 0 },
+  { stop: "Campbell Airstrip", miles: 11 },
+  { stop: "Willow", miles: 42 },
+  { stop: "Yetna Station", miles: 53 },
+  { stop: "Skwentna", miles: 83 },
+  { stop: "Finger Lake", miles: 123 },
+  { stop: "Rainy Pass", miles: 153 },
+  { stop: "Rohn", miles: 188 },
+  { stop: "Nikolai", miles: 263 },
+  { stop: "McGrath", miles: 311 },
+  { stop: "Takotna", miles: 329 },
+  { stop: "Ophir", miles: 352 },
+  { stop: "Cripple", miles: 425 },
+  { stop: "Ruby", miles: 495 },
+  { stop: "Galena", miles: 545 },
+  { stop: "Nulato", miles: 582 },
+  { stop: "Kaltag", miles: 629 },
+  { stop: "Unalakleet", miles: 714 },
+  { stop: "Shaktoolik", miles: 754 },
+  { stop: "Koyuk", miles: 804 },
+  { stop: "Elim", miles: 852 },
+  { stop: "Golovin", miles: 880 },
+  { stop: "White Mountain", miles: 898 },
+  { stop: "Safety", miles: 953 },
+  { stop: "Nome", miles: 975 }
+]
 
 function getLocation(progress) {
-    return iditarod.filter(checkpoint => checkpoint.miles <= progress);
-  }
+  return iditarod.filter(checkpoint => checkpoint.miles <= progress);
+}
 
+function Equivalent(user, record) {
+  return user!=null && record.record.name === user?.name;
+}
 
 const Record = (props) => (
-  <li className = "border p-3 rounded" >
-                <h2 className="text-2xl">{props.record.name}</h2> 
-                <p className="flex flex-row justify-between text-2xl">{props.record.progress} 
-                <progress value={props.record.progress/975}/>
-                975</p>
-              {
-                (() => {
-                  const locations = getLocation(props.record.progress);
-                  const last = locations[locations.length - 1];
-                  return (
-                    <div className = "flex flex-row justify-between text-2xl">
-                    <span>
-                      Last Checkpoint Reached: {last ? last.stop : "Not started"}
-                    </span>
-                    <span>
-                      Next Checkpoint: {iditarod[locations.length] ? iditarod[locations.length].stop : "Finished"}
-                    </span>
-                    </div>
-                  );
-                })()
-              }
-            </li>
+  <li className="border p-3 rounded" >
+    <h2 className="flex flex-row text-2xl justify-between p-2">{props.record.name}
+      {Equivalent(props.user, props) &&
+        <NavLink
+          className="mr-2 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 h-7 rounded-md px-2"
+          to="/editprogress">
+          Edit Progress
+          </NavLink>}
+    </h2>
+    <p className="flex flex-row justify-between text-2xl">{props.record.progress}
+      <progress value={props.record.progress / 975} />
+      975</p>
+    {
+      (() => {
+        const locations = getLocation(props.record.progress);
+        const last = locations[locations.length - 1];
+        return (
+          <div className="flex flex-row justify-between text-2xl">
+            <span>
+              Last Checkpoint Reached: {last ? last.stop : "Not started"}
+            </span>
+            <span>
+              Next Checkpoint: {iditarod[locations.length] ? iditarod[locations.length].stop : "Finished"}
+            </span>
+          </div>
+        );
+      })()
+    }
+  </li>
   // <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
   //   <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
   //     {props.record.name}
@@ -92,6 +104,7 @@ const Record = (props) => (
 
 export default function RecordList() {
   const [records, setRecords] = useState([]);
+  const { user, login, logout } = useContext(UserContext);
 
   // This method fetches the records from the database.
   useEffect(() => {
@@ -106,6 +119,7 @@ export default function RecordList() {
       setRecords(records);
     }
     getRecords();
+    
     return;
   }, [records.length]);
 
@@ -124,6 +138,7 @@ export default function RecordList() {
       return (
         <Record
           record={record}
+          user={user}
           deleteRecord={() => deleteRecord(record._id)}
           key={record._id}
         />

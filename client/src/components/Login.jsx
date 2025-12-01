@@ -2,42 +2,43 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 
-export default function Login({children}) {
+export default function Login({ children }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
     progress: 0,
   });
-  const {user, login, logout} = useContext(UserContext);
+  const { user, login, logout } = useContext(UserContext);
   const [isNew, setIsNew] = useState(true);
   const params = useParams();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [loginFail, setLoginFail] = useState(false);
 
-//   useEffect(() => {
-//     async function fetchData() {
-//       const id = params.id?.toString() || undefined;
-//       if(!id) return;
-//       setIsNew(false);
-//       const response = await fetch(
-//         `http://localhost:5050/record/${params.id.toString()}`
-//       );
-//       if (!response.ok) {
-//         const message = `An error has occurred: ${response.statusText}`;
-//         console.error(message);
-//         return;
-//       }
-//       const record = await response.json();
-//       if (!record) {
-//         console.warn(`Record with id ${id} not found`);
-//         navigate("/");
-//         return;
-//       }
-//       setForm(record);
-//     }
-//     fetchData();
-//     return;
-//   }, [params.id, navigate]);
+  //   useEffect(() => {
+  //     async function fetchData() {
+  //       const id = params.id?.toString() || undefined;
+  //       if(!id) return;
+  //       setIsNew(false);
+  //       const response = await fetch(
+  //         `http://localhost:5050/record/${params.id.toString()}`
+  //       );
+  //       if (!response.ok) {
+  //         const message = `An error has occurred: ${response.statusText}`;
+  //         console.error(message);
+  //         return;
+  //       }
+  //       const record = await response.json();
+  //       if (!record) {
+  //         console.warn(`Record with id ${id} not found`);
+  //         navigate("/");
+  //         return;
+  //       }
+  //       setForm(record);
+  //     }
+  //     fetchData();
+  //     return;
+  //   }, [params.id, navigate]);
 
   // These methods will update the state properties.
   function updateForm(value) {
@@ -52,32 +53,36 @@ export default function Login({children}) {
     const person = { ...form };
 
     try {
-        login(person);
-        navigate("/");
-    //   let response;
-    //   if (isNew) {
-    //     // if we are adding a new record we will POST to /record.
-    //     response = await fetch("http://localhost:5050/record", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(person),
-    //     });
-    //   } else {
-    //     // if we are updating a record we will PATCH to /record/:id.
-    //     response = await fetch(`http://localhost:5050/record/${params.id}`, {
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(person),
-    //     });
-    //   }
+      const result = await login(person);
+      console.log('Login result: ', result);
+      if (!result) {
+        setLoginFail(true);
+      }
+      else { navigate("/"); }
+      //   let response;
+      //   if (isNew) {
+      //     // if we are adding a new record we will POST to /record.
+      //     response = await fetch("http://localhost:5050/record", {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify(person),
+      //     });
+      //   } else {
+      //     // if we are updating a record we will PATCH to /record/:id.
+      //     response = await fetch(`http://localhost:5050/record/${params.id}`, {
+      //       method: "PATCH",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify(person),
+      //     });
+      //   }
 
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   }
+      //   if (!response.ok) {
+      //     throw new Error(`HTTP error! status: ${response.status}`);
+      //   }
     } catch (error) {
       console.error('A problem occurred while logging in ', error);
     } finally {
@@ -139,7 +144,9 @@ export default function Login({children}) {
                 </div>
               </div>
             </div>
+            {loginFail && <div className="text-red-600 ">Login failed: Invalid email or password.</div>}
           </div>
+          
         </div>
         <input
           type="submit"
