@@ -165,7 +165,7 @@ export default function Signup() {
             </div>
             <div className="sm:col-span-4">
               <label
-                htmlFor="position"
+                htmlFor="progress"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Miles Completed
