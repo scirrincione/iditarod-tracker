@@ -8,7 +8,7 @@ export const UserProvider = ({ children }) => {
 
   const fetchUserData = async (userData) => {
     if (!userData) return;
-    console.log("Fetching user data for:", userData.email);
+    console.log("Fetching user data for:", userData.username);
     const response = await fetch(`${import.meta.env.VITE_SERVER_URL}record/`);
     if (!response.ok){
       const message = `An error occurred: ${response.statusText}`;
@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
       return;
     }
     const resJson = await response.json();
-    const record = await resJson.find(entry => entry.email == userData.email);
+    const record = await resJson.find(entry => entry.username == userData.username);
 
     console.log("Fetched user data:", record);
     if (!record) {

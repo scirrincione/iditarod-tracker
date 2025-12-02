@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Login from "./Login";
+import { UserContext } from "../contexts/UserContext";
 
 export default function Signup() {
   const [form, setForm] = useState({
     name: "",
-    email: "",
+    username: "",
     password: "",
     progress: 0,
   });
@@ -12,6 +14,7 @@ export default function Signup() {
   const [isNew, setIsNew] = useState(true);
   const params = useParams();
   const navigate = useNavigate(); 
+  const { user, login, logout } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -77,7 +80,11 @@ export default function Signup() {
     } catch (error) {
       console.error('A problem occurred adding or updating a record: ', error);
     } finally {
-      setForm({ name: "", position: "", level: "" });
+      const result = await login({username: form.username, password: form.password});
+      if (!result) {
+        console.error("Login after signup failed");
+      }
+      setForm({ name: "", username: "", password: "", progress: 0 });
       navigate("/");
     }
   }
@@ -116,21 +123,21 @@ export default function Signup() {
             </div>
             <div className="sm:col-span-4">
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
-                Email
+                Username
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="email"
-                    id="email"
+                    name="username"
+                    id="username"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="example@gmail.com"
-                    value={form.email}
-                    onChange={(e) => updateForm({ email: e.target.value })}
+                    value={form.username}
+                    onChange={(e) => updateForm({ username: e.target.value })}
                   />
                 </div>
               </div>

@@ -5,7 +5,7 @@ import { UserContext } from "../contexts/UserContext";
 export default function Login({ children }) {
   const [form, setForm] = useState({
     name: "",
-    email: "",
+    username: "",
     password: "",
     progress: 0,
   });
@@ -86,7 +86,7 @@ export default function Login({ children }) {
     } catch (error) {
       console.error('A problem occurred while logging in ', error);
     } finally {
-      setForm({ email: "", password: "" });
+      setForm({ username: "", password: "" });
       //navigate("/");
     }
   }
@@ -104,21 +104,21 @@ export default function Login({ children }) {
           <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
             <div className="sm:col-span-4">
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
-                Email
+                Username
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="email"
-                    id="email"
+                    name="username"
+                    id="username"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="example@gmail.com"
-                    value={form.email}
-                    onChange={(e) => updateForm({ email: e.target.value })}
+                    value={form.username}
+                    onChange={(e) => updateForm({ username: e.target.value })}
                   />
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function Login({ children }) {
                 </div>
               </div>
             </div>
-            {loginFail && <div className="text-red-600 ">Login failed: Invalid email or password.</div>}
+            {loginFail && <div className="text-red-600 ">Login failed: Invalid username or password.</div>}
           </div>
           
         </div>

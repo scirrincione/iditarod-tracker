@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
   try {
     let newDocument = {
       name: req.body.name,
-      email: req.body.email,
+      username: req.body.username,
       password: req.body.password,
       progress: req.body.progress,
     };
@@ -53,7 +53,7 @@ router.patch("/:id", async (req, res) => {
     const updates = {
       $set: {
         name: req.body.name,
-        email: req.body.email,
+        username: req.body.username,
         password: req.body.password,
         progress: req.body.progress,
       },

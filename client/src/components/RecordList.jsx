@@ -49,15 +49,17 @@ const Record = (props) => (
           Edit Progress
           </NavLink>}
     </h2>
-    <p className="flex flex-row justify-between text-2xl">{props.record.progress}
+    <div className="flex flex-row justify-between text-xl">
+      <div className="pr-2">{props.record.progress}</div>
       <progress value={props.record.progress / 975} />
-      975</p>
+      <div className="pl-2">975</div>
+      </div>
     {
       (() => {
         const locations = getLocation(props.record.progress);
         const last = locations[locations.length - 1];
         return (
-          <div className="flex flex-row justify-between text-2xl">
+          <div className="flex flex-row justify-between text-xl md:text-2xl mt-2">
             <span>
               Last Checkpoint Reached: {last ? last.stop : "Not started"}
             </span>
