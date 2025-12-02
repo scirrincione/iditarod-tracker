@@ -114,7 +114,7 @@ export default function Signup() {
                     name="name"
                     id="name"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="First Last"
+                    placeholder="Display Name"
                     value={form.name}
                     onChange={(e) => updateForm({ name: e.target.value })}
                   />
@@ -135,7 +135,7 @@ export default function Signup() {
                     name="username"
                     id="username"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="example@gmail.com"
+                    placeholder="username123"
                     value={form.username}
                     onChange={(e) => updateForm({ username: e.target.value })}
                   />
