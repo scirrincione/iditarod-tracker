@@ -10,6 +10,7 @@ import RecordList from "./components/RecordList";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import EditProgress from "./components/EditProgress";
+import EditProfile from "./components/EditProfile";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -70,6 +71,16 @@ const router = createBrowserRouter([
        {
         path: "/editprogress",
         element: <EditProgress />,
+       }
+    ]
+  },
+  {
+    path:"/editprofile",
+    element: <App />,
+    children: [
+       {
+        path: "/editprofile",
+        element: <EditProfile />,
        }
     ]
   },

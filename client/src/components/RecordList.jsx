@@ -4,31 +4,31 @@ import { UserContext } from "../contexts/UserContext";
 import { NavLink } from "react-router-dom";
 
 const iditarod = [
-  { stop: "Anchorage", miles: 0 },
-  { stop: "Campbell Airstrip", miles: 11 },
-  { stop: "Willow", miles: 42 },
-  { stop: "Yetna Station", miles: 53 },
-  { stop: "Skwentna", miles: 83 },
-  { stop: "Finger Lake", miles: 123 },
-  { stop: "Rainy Pass", miles: 153 },
-  { stop: "Rohn", miles: 188 },
-  { stop: "Nikolai", miles: 263 },
-  { stop: "McGrath", miles: 311 },
-  { stop: "Takotna", miles: 329 },
-  { stop: "Ophir", miles: 352 },
-  { stop: "Cripple", miles: 425 },
-  { stop: "Ruby", miles: 495 },
-  { stop: "Galena", miles: 545 },
-  { stop: "Nulato", miles: 582 },
-  { stop: "Kaltag", miles: 629 },
-  { stop: "Unalakleet", miles: 714 },
-  { stop: "Shaktoolik", miles: 754 },
-  { stop: "Koyuk", miles: 804 },
-  { stop: "Elim", miles: 852 },
-  { stop: "Golovin", miles: 880 },
-  { stop: "White Mountain", miles: 898 },
-  { stop: "Safety", miles: 953 },
-  { stop: "Nome", miles: 975 }
+  { stop: "Anchorage", miles: 0, color: "text-red-800" },
+  { stop: "Campbell Airstrip", miles: 11, color: "text-red-800" },
+  { stop: "Willow", miles: 42, color: "text-orange-800"  },
+  { stop: "Yetna Station", miles: 53, color: "text-orange-800"  },
+  { stop: "Skwentna", miles: 83, color: "text-amber-800"  },
+  { stop: "Finger Lake", miles: 123, color: "text-amber-800"  },
+  { stop: "Rainy Pass", miles: 153, color: "text-yellow-800"  },
+  { stop: "Rohn", miles: 188, color: "text-yellow-800"  },
+  { stop: "Nikolai", miles: 263, color: "text-lime-800"  },
+  { stop: "McGrath", miles: 311, color: "text-lime-800"  },
+  { stop: "Takotna", miles: 329, color: "text-green-800"  },
+  { stop: "Ophir", miles: 352, color: "text-green-800"  },
+  { stop: "Cripple", miles: 425, color: "text-emerald-800"  },
+  { stop: "Ruby", miles: 495, color: "text-emerald-800"  },
+  { stop: "Galena", miles: 545, color: "text-teal-800"  },
+  { stop: "Nulato", miles: 582, color: "text-teal-800"  },
+  { stop: "Kaltag", miles: 629, color: "text-cyan-800"  },
+  { stop: "Unalakleet", miles: 714, color: "text-cyan-800"  },
+  { stop: "Shaktoolik", miles: 754, color: "text-sky-800"  },
+  { stop: "Koyuk", miles: 804, color: "text-sky-800"  },
+  { stop: "Elim", miles: 852, color: "text-blue-800"  },
+  { stop: "Golovin", miles: 880, color: "text-blue-800"  },
+  { stop: "White Mountain", miles: 898, color: "text-indigo-800"  },
+  { stop: "Safety", miles: 953, color: "text-indigo-800"  },
+  { stop: "Nome", miles: 975, color: "text-green-600"  },
 ]
 
 function getLocation(progress) {
@@ -44,7 +44,7 @@ const Record = (props) => (
     <h2 className="flex flex-row text-2xl justify-between p-2">{props.record.name}
       {Equivalent(props.user, props) &&
         <NavLink
-          className="mr-2 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 h-7 rounded-md px-2"
+          className="mr-2 mb-1 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium border border-input bg-background hover:bg-slate-100 h-7 rounded-md px-2"
           to="/editprogress">
           Edit Progress
           </NavLink>}
@@ -58,13 +58,14 @@ const Record = (props) => (
       (() => {
         const locations = getLocation(props.record.progress);
         const last = locations[locations.length - 1];
+        console.log(locations[locations.length-1]);
         return (
           <div className="flex flex-row justify-between text-xl md:text-2xl mt-2">
-            <span>
-              Last Checkpoint Reached: {last ? last.stop : "Not started"}
+            <span className="mr-5">
+              Last Checkpoint Reached: <div className={`inline-flex items-center justify-center whitespace-nowrap text-base font-medium border border-2 bg-background h-9 rounded-md px-1 ${last.color}`}>{last ? last.stop : "Not started"}</div>
             </span>
             <span>
-              Next Checkpoint: {iditarod[locations.length] ? iditarod[locations.length].stop : "Finished"}
+              Next Checkpoint: <div className={`inline-flex items-center justify-center whitespace-nowrap text-base font-medium border border-2 bg-background h-9 rounded-md px-1 ${iditarod[locations.length] ? iditarod[locations.length].color : "text-green-600"}`}>{iditarod[locations.length] ? iditarod[locations.length].stop : "Finished"}</div>
             </span>
           </div>
         );
@@ -118,7 +119,8 @@ export default function RecordList() {
         return;
       }
       const records = await response.json();
-      setRecords(records);
+      const sortedRecords = records.sort((a, b) => b.progress - a.progress);
+      setRecords(sortedRecords);
     }
     getRecords();
     
