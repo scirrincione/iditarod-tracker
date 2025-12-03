@@ -54,7 +54,6 @@ export default function Login({ children }) {
 
     try {
       const result = await login(person);
-      console.log('Login result: ', result);
       if (!result) {
         setLoginFail(true);
       }

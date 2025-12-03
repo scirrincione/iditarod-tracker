@@ -8,7 +8,6 @@ export const UserProvider = ({ children }) => {
 
   const fetchUserData = async (userData) => {
     if (!userData) return;
-    console.log("Fetching user data for:", userData.username);
     const response = await fetch(`${import.meta.env.VITE_SERVER_URL}record/`);
     if (!response.ok){
       const message = `An error occurred: ${response.statusText}`;
@@ -18,7 +17,6 @@ export const UserProvider = ({ children }) => {
     const resJson = await response.json();
     const record = await resJson.find(entry => entry.username == userData.username);
 
-    console.log("Fetched user data:", record);
     if (!record) {
       console.error('User not found');
       setUser(null);
@@ -27,7 +25,6 @@ export const UserProvider = ({ children }) => {
     if (record.password !== userData.password) {
       console.error('Invalid password');
       setUser(null);
-      console.log('Invalid password');
       return;
     }
     return record;
@@ -41,7 +38,6 @@ export const UserProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    console.log('User logged out');
     return;
   };
 
