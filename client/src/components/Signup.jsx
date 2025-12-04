@@ -51,6 +51,8 @@ export default function Signup() {
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
+    form.username = form.username.trim();
+    form.username = form.username.toLowerCase();
     const person = { ...form };
     try {
       let response;
