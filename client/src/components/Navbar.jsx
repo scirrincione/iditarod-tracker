@@ -15,7 +15,7 @@ export default function Navbar() {
         <NavLink to="/">
           <img alt="Iditarod logo" className="hidden md:block h-30" src={logo}></img>
         </NavLink>
-        <h1 className="font-bold text-4xl px-2 md:px-0 md:text-5xl">Iditarod Training Tracker</h1>
+        <NavLink className="font-bold text-4xl px-2 md:px-0 md:text-5xl" to="/">Iditarod Training Tracker</NavLink>
         {!user && <div className="items-right">
           <NavLink
             className="mr-2 mb-1 inline-flex items-center justify-center whitespace-nowrap text-md font-medium border border-input bg-background hover:bg-slate-100 h-9 rounded-md px-3"
