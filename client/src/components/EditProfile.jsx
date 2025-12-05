@@ -53,13 +53,13 @@ export default function EditProgress() {
 
   // This following section will display the form that takes the input from the user.
   return (
-    <>
-      <h3 className="text-lg font-semibold p-4">Edit Profile</h3>
+    <div>
+      <h3 className="text-lg font-semibold px-4 py-2 bg-sky-200">Edit Profile</h3>
       <form
         onSubmit={onSubmit}
-        className="border rounded-lg overflow-hidden p-4"
+        className="border-t-2 border-b-2 border-sky-800 overflow-hidden p-4"
       >
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-400 pb-12 md:grid-cols-2">
 
           <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
             <div className="sm:col-span-4 font-bold">
@@ -87,9 +87,9 @@ export default function EditProgress() {
         <input
           type="submit"
           value="Change name"
-          className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
+          className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium border border-sky-800 border-input bg-background hover:bg-slate-100 hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
         />
       </form>
-    </>
+    </div>
   );
 }
