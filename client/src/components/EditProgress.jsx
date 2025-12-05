@@ -58,10 +58,10 @@ export default function EditProgress() {
   // This following section will display the form that takes the input from the user.
   return (
     <>
-      <h3 className="text-lg font-semibold p-4">Edit Progress</h3>
+      <h3 className="text-lg font-semibold p-4 bg-sky-200">Edit Progress</h3>
       <form
         onSubmit={onSubmit}
-        className="border rounded-lg overflow-hidden p-4"
+        className="border-y-2 overflow-hidden p-4"
       >
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
 

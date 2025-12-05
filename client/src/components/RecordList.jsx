@@ -40,7 +40,7 @@ function Equivalent(user, record) {
 }
 
 const Record = (props) => (
-  <li className="border p-3 rounded" >
+  <li className="border-2 border-sky-800 p-3 rounded bg-sky-200" >
     <h2 className="flex flex-row text-2xl justify-between p-2">{props.record.name}
       {Equivalent(props.user, props) &&
         <NavLink
@@ -140,12 +140,14 @@ export default function RecordList() {
   function recordList() {
     return records.map((record) => {
       return (
-        <Record
+        <div className="my-2">
+          <Record
           record={record}
           user={user}
           deleteRecord={() => deleteRecord(record._id)}
           key={record._id}
         />
+        </div>
       );
     });
   }
@@ -153,9 +155,9 @@ export default function RecordList() {
   // This following section will display the table with the records of individuals.
   return (
     <>
-      <div className="border rounded-lg overflow-hidden">
+      <div className="overflow-hidden">
         <div className="relative w-full overflow-auto">
-          <div className="font-bold text-3xl p-4">Mushers</div>
+          <div className="font-bold text-3xl text-sky-900 p-4 bg-sky-200 border-b-2 border-sky-800">Mushers</div>
           {recordList()}
         </div>
       </div>
