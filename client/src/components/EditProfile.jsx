@@ -5,35 +5,39 @@ import { UserContext } from "../contexts/UserContext";
 export default function EditProgress() {
   const { user, updateUser } = useContext(UserContext);
   const [name, setName] = useState(user?.name);
+  const [competing, setCompeting] = useState(user?.competing);
 
   const [isNew, setIsNew] = useState(true);
   //const params = useParams();
   const navigate = useNavigate(); 
 
-  useEffect(() => {
-    async function fetchData() {
-      const id = user?.id?.toString() || undefined;
-      if(!id) return;
-      setIsNew(false);
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}record/${user?.id.toString()}`
-      );
-      if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
-        console.error(message);
-        return;
-      }
-      const record = await response.json();
-      if (!record) {
-        console.warn(`Record with id ${id} not found`);
-        navigate("/");
-        return;
-      }
-      setName(user?.name);
-    }
-    fetchData();
-    return;
-  }, [user?.id, navigate]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const id = user?.id?.toString() || undefined;
+  //     if(!id) return;
+  //     setIsNew(false);
+  //     const response = await fetch(
+  //       `${import.meta.env.VITE_SERVER_URL}record/${user?.id.toString()}`
+  //     );
+  //     if (!response.ok) {
+  //       const message = `An error has occurred: ${response.statusText}`;
+  //       console.error(message);
+  //       return;
+  //     }
+  //     const record = await response.json();
+  //     if (!record) {
+  //       console.warn(`Record with id ${id} not found`);
+  //       navigate("/");
+  //       return;
+  //     }
+  //     console.log(user?.name);
+  //     console.log(user?.competing);
+  //     setName(user?.name);
+  //     setCompeting(user?.competing);
+  //   }
+  //   fetchData();
+  //   return;
+  // }, [user?.id, navigate]);
 
   // These methods will update the state properties.
 //   function updateForm(value) {
@@ -45,7 +49,8 @@ export default function EditProgress() {
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
-    const updatedUser = updateUser({ ...user, name: name });
+    console.log("Submitting changes:", name, competing);
+    const updatedUser = updateUser({ ...user, name: name, competing: competing });
     if (updatedUser) {
       navigate("/");
     }
@@ -64,7 +69,7 @@ export default function EditProgress() {
           <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
             <div className="sm:col-span-4 font-bold">
               <label
-                htmlFor="position"
+                htmlFor="name"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
                 Change Name
@@ -73,8 +78,8 @@ export default function EditProgress() {
                 <div className="flex font-normal rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="progress"
-                    id="progress"
+                    name="name"
+                    id="name"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -82,11 +87,29 @@ export default function EditProgress() {
                 </div>
               </div>
             </div>
+            <div className="sm:col-span-4 font-bold">
+              <label
+                htmlFor="competing"
+                className="block text-sm font-medium leading-6 text-slate-900"
+              >
+                Competing
+              </label>
+              <div className="mt-2">
+                <input
+                    type="checkbox"
+                    name="competing"
+                    id="competing"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    checked={competing}
+                    onChange={(e) => setCompeting(e.target.checked)}
+                  />
+              </div>
+            </div>
           </div>
         </div>
         <input
           type="submit"
-          value="Change name"
+          value="Save Changes"
           className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium border border-sky-800 border-input bg-background hover:bg-slate-100 hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
         />
       </form>

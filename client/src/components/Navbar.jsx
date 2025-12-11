@@ -37,7 +37,7 @@ export default function Navbar() {
           <button className="mr-2 mb-1 inline-flex items-center justify-center whitespace-nowrap text-md text-sky-900 font-medium border border-input border-sky-800 bg-background hover:bg-slate-100 h-9 rounded-md px-3"
             onClick={handleLogout}
             title="Sign out"
-            accessibilityLabel="Sign out of your account">
+            accessibilitylabel="Sign out of your account">
             Sign out
           </button>
         </div>}

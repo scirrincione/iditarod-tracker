@@ -36,6 +36,7 @@ router.post("/", async (req, res) => {
       username: req.body.username,
       password: req.body.password,
       progress: req.body.progress,
+      competing: req.body.competing,
     };
     let collection = await db.collection("records");
     let result = await collection.insertOne(newDocument);
@@ -56,6 +57,7 @@ router.patch("/:id", async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         progress: req.body.progress,
+        competing: req.body.competing,
       },
     };
 
