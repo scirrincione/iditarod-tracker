@@ -6,29 +6,29 @@ import { NavLink } from "react-router-dom";
 const iditarod = [
   { stop: "Anchorage", miles: 0, color: "text-red-800" },
   { stop: "Campbell Airstrip", miles: 11, color: "text-red-800" },
-  { stop: "Willow", miles: 42, color: "text-orange-800"  },
-  { stop: "Yetna Station", miles: 53, color: "text-orange-800"  },
-  { stop: "Skwentna", miles: 83, color: "text-amber-800"  },
-  { stop: "Finger Lake", miles: 123, color: "text-amber-800"  },
-  { stop: "Rainy Pass", miles: 153, color: "text-yellow-800"  },
-  { stop: "Rohn", miles: 188, color: "text-yellow-800"  },
-  { stop: "Nikolai", miles: 263, color: "text-lime-800"  },
-  { stop: "McGrath", miles: 311, color: "text-lime-800"  },
-  { stop: "Takotna", miles: 329, color: "text-green-800"  },
-  { stop: "Ophir", miles: 352, color: "text-green-800"  },
-  { stop: "Cripple", miles: 425, color: "text-emerald-800"  },
-  { stop: "Ruby", miles: 495, color: "text-emerald-800"  },
-  { stop: "Galena", miles: 545, color: "text-teal-800"  },
-  { stop: "Nulato", miles: 582, color: "text-teal-800"  },
-  { stop: "Kaltag", miles: 629, color: "text-cyan-800"  },
-  { stop: "Unalakleet", miles: 714, color: "text-cyan-800"  },
-  { stop: "Shaktoolik", miles: 754, color: "text-sky-800"  },
-  { stop: "Koyuk", miles: 804, color: "text-sky-800"  },
-  { stop: "Elim", miles: 852, color: "text-blue-800"  },
-  { stop: "Golovin", miles: 880, color: "text-blue-800"  },
-  { stop: "White Mountain", miles: 898, color: "text-indigo-800"  },
-  { stop: "Safety", miles: 953, color: "text-indigo-800"  },
-  { stop: "Nome", miles: 975, color: "text-green-600"  },
+  { stop: "Willow", miles: 42, color: "text-orange-800" },
+  { stop: "Yetna Station", miles: 53, color: "text-orange-800" },
+  { stop: "Skwentna", miles: 83, color: "text-amber-800" },
+  { stop: "Finger Lake", miles: 123, color: "text-amber-800" },
+  { stop: "Rainy Pass", miles: 153, color: "text-yellow-800" },
+  { stop: "Rohn", miles: 188, color: "text-yellow-800" },
+  { stop: "Nikolai", miles: 263, color: "text-lime-800" },
+  { stop: "McGrath", miles: 311, color: "text-lime-800" },
+  { stop: "Takotna", miles: 329, color: "text-green-800" },
+  { stop: "Ophir", miles: 352, color: "text-green-800" },
+  { stop: "Cripple", miles: 425, color: "text-emerald-800" },
+  { stop: "Ruby", miles: 495, color: "text-emerald-800" },
+  { stop: "Galena", miles: 545, color: "text-teal-800" },
+  { stop: "Nulato", miles: 582, color: "text-teal-800" },
+  { stop: "Kaltag", miles: 629, color: "text-cyan-800" },
+  { stop: "Unalakleet", miles: 714, color: "text-cyan-800" },
+  { stop: "Shaktoolik", miles: 754, color: "text-sky-800" },
+  { stop: "Koyuk", miles: 804, color: "text-sky-800" },
+  { stop: "Elim", miles: 852, color: "text-blue-800" },
+  { stop: "Golovin", miles: 880, color: "text-blue-800" },
+  { stop: "White Mountain", miles: 898, color: "text-indigo-800" },
+  { stop: "Safety", miles: 953, color: "text-indigo-800" },
+  { stop: "Nome", miles: 975, color: "text-green-600" },
 ]
 
 function getLocation(progress) {
@@ -36,29 +36,35 @@ function getLocation(progress) {
 }
 
 function Equivalent(user, record) {
-  return user!=null && record.record.name === user?.name;
+  return user != null && record.record.name === user?.name;
 }
 
 const Record = (props) => (
   <li className="border-2 border-sky-800 p-3 rounded bg-sky-200" >
     <h2 className="flex flex-row text-2xl justify-between p-2">{props.record.name}
-      {Equivalent(props.user, props) &&
-        <NavLink
-          className="mr-2 mb-1 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium border border-input bg-background hover:bg-slate-100 h-7 rounded-md px-2"
-          to="/editprogress">
-          Edit Progress
+      <div className="flex flex-row">
+        {props.record.competing &&
+          <div
+            className="mr-2 mb-1 text-green-800 inline-flex items-center justify-center whitespace-nowrap text-sm font-bold border-2 bg-background h-7 rounded-md px-2">
+            Competing
+          </div>}
+        {Equivalent(props.user, props) &&
+          <NavLink
+            className="mr-2 mb-1 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium border border-input bg-background hover:bg-slate-100 h-7 rounded-md px-2"
+            to="/editprogress">
+            Edit Progress
           </NavLink>}
+      </div>
     </h2>
     <div className="flex flex-row justify-between text-xl">
       <div className="pr-2">{props.record.progress}</div>
       <progress value={props.record.progress / 975} />
       <div className="pl-2">975</div>
-      </div>
+    </div>
     {
       (() => {
         const locations = getLocation(props.record.progress);
         const last = locations[locations.length - 1];
-        console.log(locations[locations.length-1]);
         return (
           <div className="flex flex-row justify-between text-xl md:text-2xl mt-2">
             <span className="mr-5">
@@ -123,7 +129,7 @@ export default function RecordList() {
       setRecords(sortedRecords);
     }
     getRecords();
-    
+
     return;
   }, [records.length]);
 
@@ -140,13 +146,13 @@ export default function RecordList() {
   function recordList() {
     return records.map((record) => {
       return (
-        <div className="my-2">
+        <div className="my-2" key={record._id}>
           <Record
-          record={record}
-          user={user}
-          deleteRecord={() => deleteRecord(record._id)}
-          key={record._id}
-        />
+            record={record}
+            user={user}
+            deleteRecord={() => deleteRecord(record._id)}
+            key={record._id}
+          />
         </div>
       );
     });
