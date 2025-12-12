@@ -17,30 +17,30 @@ export default function Signup() {
   const navigate = useNavigate();
   const { user, login, logout } = useContext(UserContext);
 
-  useEffect(() => {
-    async function fetchData() {
-      const id = params.id?.toString() || undefined;
-      if (!id) return;
-      setIsNew(false);
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}record/${params.id.toString()}`
-      );
-      if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
-        console.error(message);
-        return;
-      }
-      const record = await response.json();
-      if (!record) {
-        console.warn(`Record with id ${id} not found`);
-        navigate("/");
-        return;
-      }
-      setForm(record);
-    }
-    fetchData();
-    return;
-  }, [params.id, navigate]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const id = params.id?.toString() || undefined;
+  //     if (!id) return;
+  //     setIsNew(false);
+  //     const response = await fetch(
+  //       `${import.meta.env.VITE_SERVER_URL}record/${params.id.toString()}`
+  //     );
+  //     if (!response.ok) {
+  //       const message = `An error has occurred: ${response.statusText}`;
+  //       console.error(message);
+  //       return;
+  //     }
+  //     const record = await response.json();
+  //     if (!record) {
+  //       console.warn(`Record with id ${id} not found`);
+  //       navigate("/");
+  //       return;
+  //     }
+  //     setForm(record);
+  //   }
+  //   fetchData();
+  //   return;
+  // }, [params.id, navigate]);
 
   // These methods will update the state properties.
   function updateForm(value) {
