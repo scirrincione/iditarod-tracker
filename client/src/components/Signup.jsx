@@ -9,17 +9,18 @@ export default function Signup() {
     username: "",
     password: "",
     progress: 0,
+    competing: false,
   });
 
   const [isNew, setIsNew] = useState(true);
   const params = useParams();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { user, login, logout } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchData() {
       const id = params.id?.toString() || undefined;
-      if(!id) return;
+      if (!id) return;
       setIsNew(false);
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_URL}record/${params.id.toString()}`
@@ -82,7 +83,7 @@ export default function Signup() {
     } catch (error) {
       console.error('A problem occurred adding or updating a record: ', error);
     } finally {
-      const result = await login({username: form.username, password: form.password});
+      const result = await login({ username: form.username, password: form.password });
       if (!result) {
         console.error("Login after signup failed");
       }
@@ -99,9 +100,9 @@ export default function Signup() {
         onSubmit={onSubmit}
         className="border-y-2 bg-sky-50 overflow-hidden p-4"
       >
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
+        <div className="gap-y-10 border-b border-slate-900/10 pb-12">
 
-          <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
+          <div className="grid grid-cols-1 gap-y-8">
             <div className="sm:col-span-4">
               <label
                 htmlFor="name"
@@ -186,6 +187,24 @@ export default function Signup() {
                 </div>
               </div>
             </div>
+            <div>
+            <label
+              htmlFor="progress"
+              className="block text-sm font-medium leading-6 text-slate-900"
+            >
+              Check if competing
+            </label>
+              <div className="mt-2 ml-2">
+                <input
+                  type="checkbox"
+                  name="competing"
+                  id="competing"
+                  className="w-4 h-4"
+                  checked={form.competing}
+                  onChange={(e) => updateForm({ competing: e.target.checked })}
+                />
+              </div>
+              </div>
           </div>
         </div>
         <input
