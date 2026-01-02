@@ -46,8 +46,8 @@ export default function EditProgress() {
   async function onSubmit(e) {
     e.preventDefault();
     const currentProgress = Number(user?.progress);
-    const added = Number(miles)
-    const newProgress = currentProgress + added;
+    const added = Number(miles);
+    const newProgress = Math.round((currentProgress + added)*100)/100;
     const updatedUser = updateUser({ ...user, progress: newProgress });
     if (updatedUser) {
       setMiles(0);
